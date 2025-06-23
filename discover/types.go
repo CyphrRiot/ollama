@@ -92,6 +92,16 @@ type OneapiGPUInfo struct {
 }
 type OneapiGPUInfoList []OneapiGPUInfo
 
+type NpuInfo struct {
+	GpuInfo
+	OpenVINOVersion   string `json:"openvino_version,omitempty"`   // Available OpenVINO version
+	DeviceType        string `json:"device_type,omitempty"`        // "NPU", "GPU.0", "GPU.1", etc.
+	MaxMemoryMB       uint64 `json:"max_memory_mb,omitempty"`      // NPU memory limit (if available)
+	QuantizationLevel string `json:"quantization_level,omitempty"` // Supported quantization (INT4, INT8, FP16)
+}
+
+type NpuInfoList []NpuInfo
+
 type GpuInfoList []GpuInfo
 
 type UnsupportedGPUInfo struct {
@@ -150,6 +160,7 @@ func (a ByFreeMemory) Less(i, j int) bool { return a[i].FreeMemory < a[j].FreeMe
 type SystemInfo struct {
 	System          CPUInfo              `json:"system"`
 	GPUs            []GpuInfo            `json:"gpus"`
+	NPUs            []NpuInfo            `json:"npus"`
 	UnsupportedGPUs []UnsupportedGPUInfo `json:"unsupported_gpus"`
 	DiscoveryErrors []string             `json:"discovery_errors"`
 }

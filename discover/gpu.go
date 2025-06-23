@@ -699,6 +699,7 @@ func (l GpuInfoList) GetVisibleDevicesEnv() (string, string) {
 
 func GetSystemInfo() SystemInfo {
 	gpus := GetGPUInfo()
+	npus := GetNPUInfo()
 	gpuMutex.Lock()
 	defer gpuMutex.Unlock()
 	discoveryErrors := []string{}
@@ -712,6 +713,7 @@ func GetSystemInfo() SystemInfo {
 	return SystemInfo{
 		System:          cpus[0],
 		GPUs:            gpus,
+		NPUs:            npus,
 		UnsupportedGPUs: unsupportedGPUs,
 		DiscoveryErrors: discoveryErrors,
 	}
